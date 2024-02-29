@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Taking App</title>
+    <style>
+        /* Styles for better appearance */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Different font */
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #fff; /* Text color */
+        }
+        h1 {
+            text-align: center;
+            color: #fff; /* Header color */
+        }
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            color: #fff; /* Form text color */
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #333; /* Input text color */
+        }
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 8px;
+            padding: 10px;
+            background-color: #f7f7f7;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .note-content {
+            flex: 1;
+            margin-right: 10px;
+            color: #000;
+        }
+        .note-timestamp {
+            color: #666;
+        }
+        .delete-form {
+            margin: 0;
+        }
+        .delete-button {
+            background-color: #dc3545;
+            color: #fff; /* Delete button text color */
+        }
+        .delete-all-button {
+            background-color: #dc3545;
+            color: #fff; /* Delete all button text color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Note Taking App</h1>
+        <form action="/" method="post">
+            <input type="text" name="note" placeholder="Enter a note">
+            <button type="submit">Add Note</button>
+        </form>
+
+        <!-- Delete All Button -->
+        <form action="/delete-all" method="post">
+            <button type="submit" class="delete-all-button">Delete All</button>
+        </form>
+
+        <ul>
+        {% for note in notes %}
+            {% set index = loop.index0 %}
+            <li class="note">
+                <div class="note-content">{{ note.content }}</div>
+                <div class="note-timestamp">{{ note.timestamp }}</div>
+                <form action="/delete/{{ index }}" method="post" class="delete-form">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
